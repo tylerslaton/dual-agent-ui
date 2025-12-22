@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useAgent, useRenderToolCall } from "@copilotkit/react-core/v2";
+import {
+  useAgent,
+  useCopilotKit,
+  useFrontendTool,
+  useRenderToolCall,
+} from "@copilotkit/react-core/v2";
 import { AgentColumn } from "./agent-column";
 import { ChatInput } from "./chat-input";
 

@@ -15,6 +15,8 @@ const serviceAdapter = new ExperimentalEmptyAdapter();
 const runtime = new CopilotRuntime({
   agents: {
     // @ts-expect-error: not an issue
+    default: new HttpAgent({ url: "http://localhost:8123/" }),
+    // @ts-expect-error: not an issue
     langgraph: new HttpAgent({ url: "http://localhost:8123/" }),
     // @ts-expect-error: not an issue
     pydantic: new HttpAgent({ url: "http://localhost:8000/" }),
