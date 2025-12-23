@@ -3,7 +3,7 @@
 import { DefaultToolCard } from "@/components/tools/default-tool-card";
 import { PieChart } from "@/components/tools/pie-chart";
 import { WeatherCard } from "@/components/tools/weather";
-import { useDefaultTool } from "@copilotkit/react-core";
+import { useDefaultTool, useRenderToolCall } from "@copilotkit/react-core";
 import { useFrontendTool } from "@copilotkit/react-core/v2";
 import { z } from "zod";
 
@@ -15,16 +15,17 @@ export function ToolRenderers() {
     ),
   });
 
-  // Register generative UI for the weather tool
-  useFrontendTool({
+  // Render backend weather tool with custom UI
+  useRenderToolCall({
     name: "get_weather",
     description: "Get the weather for a given location.",
-    parameters: z.object({
-      location: z.string().describe("The location to get weather for"),
-    }),
-    render: ({ args }) => (
-      <WeatherCard location={args.location} themeColor="black" />
-    ),
+    parameters: [
+      { name: "location", type: "string", description: "The location to get weather for" },
+    ],
+    render: (props) => {
+      const { args } = props;
+      return <WeatherCard location={args.location as string} themeColor="black" />;
+    },
   });
 
   // Register generative UI for the pie chart tool
@@ -44,6 +45,9 @@ export function ToolRenderers() {
     render: ({ args }) => (
       <PieChart title={args.title} data={args.data ?? []} />
     ),
+    handler: async ({ title, data }) => {
+      return { title, data };
+    },
   });
 
   return null;
