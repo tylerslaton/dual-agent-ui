@@ -4,6 +4,7 @@ import {
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
 import { HttpAgent } from "@ag-ui/client";
+import { LangGraphHttpAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest } from "next/server";
 
 // 1. You can use any service adapter here for multi-agent support. We use
@@ -14,10 +15,8 @@ const serviceAdapter = new ExperimentalEmptyAdapter();
 //    integration to setup the connection.
 const runtime = new CopilotRuntime({
   agents: {
-    // @ts-expect-error: not an issue
-    default: new HttpAgent({ url: "http://localhost:8123/" }),
-    // @ts-expect-error: not an issue
-    langgraph: new HttpAgent({ url: "http://localhost:8123/" }),
+    default: new LangGraphHttpAgent({ url: "http://localhost:8123/" }),
+    langgraph: new LangGraphHttpAgent({ url: "http://localhost:8123/" }),
     // @ts-expect-error: not an issue
     pydantic: new HttpAgent({ url: "http://localhost:8000/" }),
   },
