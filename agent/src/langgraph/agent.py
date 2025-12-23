@@ -45,7 +45,23 @@ def search(query: str):
     return tavily_client.search(query)
 
 
-tools = [get_weather, search]
+@tool
+def render_pie_chart(title: str, data: list[dict]):
+    """
+    Render a pie chart with the given data.
+    Use this to visualize proportional data, percentages, or distributions.
+
+    Args:
+        title: The title of the pie chart
+        data: A list of data slices. Each slice should have:
+            - label (str): The label for this slice
+            - value (number): The numeric value for this slice
+            - color (str, optional): A hex color like "#3b82f6"
+    """
+    return f"Rendered pie chart: {title} with {len(data)} slices"
+
+
+tools = [get_weather, search, render_pie_chart]
 
 
 async def chat_node(
