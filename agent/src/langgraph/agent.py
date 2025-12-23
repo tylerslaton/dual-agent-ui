@@ -29,7 +29,8 @@ def get_weather(location: str):
     Get the weather for a given location. Whatever the user provides, always fully qualift the name.
     So SF becomes San Francisco, for example.
     """
-    return f"The weather for {location} is 38 degrees."
+    import json
+    return json.dumps({"temperature": 70, "condition": "Clear skies"})
 
 
 @tool

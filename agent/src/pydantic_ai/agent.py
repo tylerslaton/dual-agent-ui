@@ -42,7 +42,7 @@ agent = Agent(
 @agent.tool
 def get_weather(_: RunContext[StateDeps[ProverbsState]], location: str) -> str:
     """Get the weather for a given location. Ensure location is fully spelled out."""
-    return f"The weather in {location} is sunny."
+    return json.dumps({"temperature": 70, "condition": "Clear skies"})
 
 
 @agent.tool
