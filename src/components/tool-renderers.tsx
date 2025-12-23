@@ -31,7 +31,7 @@ export function ToolRenderers() {
   // Register generative UI for the pie chart tool
   useFrontendTool({
     name: "render_pie_chart",
-    description: "Render a pie chart with the given data.",
+    description: "Render a pie chart with the given data. you MUST!!! provide the data to be rendered.",
     parameters: z.object({
       title: z.string().optional().describe("The title of the pie chart"),
       data: z.array(
