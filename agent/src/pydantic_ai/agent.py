@@ -1,5 +1,6 @@
 import json
 from textwrap import dedent
+from typing import Annotated
 
 # load environment variables
 from dotenv import load_dotenv
@@ -58,19 +59,38 @@ def search(_: RunContext[StateDeps[ProverbsState]], query: str) -> str:
     return json.dumps(tavily_client.search(query))
 
 
-@agent.tool
-def render_pie_chart(
-    _: RunContext[StateDeps[ProverbsState]], title: str, data: list[dict]
-) -> str:
-    """
-    Render a pie chart with the given data.
-    Use this to visualize proportional data, percentages, or distributions.
+class PieSlice(BaseModel):
+    """A single slice of a pie chart."""
 
-    Args:
-        title: The title of the pie chart
-        data: A list of data slices. Each slice should have:
-            - label (str): The label for this slice
-            - value (number): The numeric value for this slice
-            - color (str, optional): A hex color like "#3b82f6"
-    """
-    return f"Rendered pie chart: {title} with {len(data)} slices"
+    label: Annotated[str, Field(description="The label for this slice")]
+    value: Annotated[float, Field(description="The numeric value for this slice")]
+    color: Annotated[
+        str | None,
+        Field(
+            default=None,
+            description="A hex color like #3b82f6",
+            pattern=r"^#[0-9a-fA-F]{6}$",
+        ),
+    ]
+
+
+class PieChartParams(BaseModel):
+    """Parameters for rendering a pie chart."""
+
+    title: Annotated[
+        str | None,
+        Field(default=None, description="The title of the pie chart"),
+    ]
+    data: Annotated[
+        list[PieSlice],
+        Field(
+            description="Array of data slices with label and value",
+            min_length=1,
+        ),
+    ]
+
+
+@agent.tool_plain
+def render_pie_chart(params: PieChartParams) -> str:
+    """Render a pie chart to visualize proportional data, percentages, or distributions."""
+    return f"Rendered pie chart: {params.title or 'Untitled'} with {len(params.data)} slices"
