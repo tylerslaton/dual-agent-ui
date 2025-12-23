@@ -51,3 +51,4 @@ export function WeatherCard({ location, themeColor }: { location?: string, theme
   </div>
   );
 }
+

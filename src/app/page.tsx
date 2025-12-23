@@ -1,5 +1,5 @@
 import { ToolRenderers } from "@/components/tool-renderers";
-import { DualAgentChat } from "@/components/dual-agent-chat";
+import { DualAgentChat } from "@/components/chat/dual-agent-chat";
 
 export default function Home() {
   return (

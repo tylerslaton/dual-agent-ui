@@ -7,8 +7,8 @@ import {
   useFrontendTool,
   useRenderToolCall,
 } from "@copilotkit/react-core/v2";
-import { AgentColumn } from "./agent-column";
-import { ChatInput } from "./chat-input";
+import { AgentColumn } from "@/components/chat/agent-column";
+import { ChatInput } from "@/components/chat/chat-input";
 
 export function DualAgentChat() {
   const [message, setMessage] = useState("");
@@ -68,3 +68,4 @@ export function DualAgentChat() {
     </div>
   );
 }
+

@@ -1,8 +1,8 @@
 "use client";
 
-import { DefaultToolCard } from "@/components/default-tool-card";
-import { PieChart } from "@/components/pie-chart";
-import { WeatherCard } from "@/components/weather";
+import { DefaultToolCard } from "@/components/tools/default-tool-card";
+import { PieChart } from "@/components/tools/pie-chart";
+import { WeatherCard } from "@/components/tools/weather";
 import { useDefaultTool } from "@copilotkit/react-core";
 import { useFrontendTool } from "@copilotkit/react-core/v2";
 import { z } from "zod";
@@ -48,3 +48,4 @@ export function ToolRenderers() {
 
   return null;
 }
+

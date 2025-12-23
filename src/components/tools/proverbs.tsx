@@ -37,3 +37,4 @@ export function ProverbsCard({ state, setState }: ProverbsCardProps) {
     </div>
   );
 }
+

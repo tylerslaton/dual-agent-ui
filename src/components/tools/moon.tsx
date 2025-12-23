@@ -86,3 +86,4 @@ export function MoonCard({ themeColor, status, respond }: MoonCardProps) {
     </div>
   );
 }
+
