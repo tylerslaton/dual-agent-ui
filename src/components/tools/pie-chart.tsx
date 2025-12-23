@@ -21,6 +21,16 @@ const DEFAULT_COLORS = [
 ];
 
 export function PieChart({ title, data }: PieChartProps) {
+  // Guard against empty/undefined data during streaming
+  if (!data || data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm w-full mt-6 mb-4">
+        {title && <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">{title}</h3>}
+        <div className="text-gray-400 text-center py-8">Loading chart data...</div>
+      </div>
+    );
+  }
+
   const total = data.reduce((sum, slice) => sum + slice.value, 0);
 
   // Calculate pie slices as SVG paths
