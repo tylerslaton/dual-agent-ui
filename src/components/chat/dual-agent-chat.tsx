@@ -17,8 +17,6 @@ export function DualAgentChat() {
   const { agent: langgraph } = useAgent({ agentId: "langgraph" });
   const { agent: pydantic } = useAgent({ agentId: "pydantic" });
 
-  const renderToolCall = useRenderToolCall();
-
   if (!langgraph || !pydantic) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -47,16 +45,8 @@ export function DualAgentChat() {
     <div className="flex flex-col h-screen max-h-screen">
       {/* Agent columns */}
       <div className="flex-1 min-h-0 grid grid-cols-2 gap-4 p-4">
-        <AgentColumn
-          title="LangGraph"
-          agent={langgraph}
-          renderToolCall={renderToolCall}
-        />
-        <AgentColumn
-          title="Pydantic AI"
-          agent={pydantic}
-          renderToolCall={renderToolCall}
-        />
+        <AgentColumn title="LangGraph" agent={langgraph} />
+        <AgentColumn title="Pydantic AI" agent={pydantic} />
       </div>
 
       {/* Input */}
@@ -68,4 +58,3 @@ export function DualAgentChat() {
     </div>
   );
 }
-

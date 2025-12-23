@@ -3,6 +3,7 @@ This is the main entry point for the agent.
 It defines the workflow graph, state, tools, nodes and edges.
 """
 
+import time
 from typing import Any
 
 from langchain_core.messages import SystemMessage
@@ -10,7 +11,7 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END, MessagesState, StateGraph
+from langgraph.graph import MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 from langgraph.types import Command
 from typing_extensions import Literal
@@ -30,7 +31,18 @@ def get_weather(location: str):
     So SF becomes San Francisco, for example.
     """
     import json
-    return json.dumps({"temperature": 70, "condition": "Clear skies"})
+
+    time.sleep(2)
+
+    return json.dumps(
+        {
+            "temperature": 70,
+            "condition": "Clear skies",
+            "humidity": 50,
+            "windSpeed": 10,
+            "feelsLike": 65,
+        }
+    )
 
 
 @tool
@@ -102,7 +114,7 @@ async def chat_node(
 
     # 6. No tool calls, so we can end the graph.
     return Command(
-        goto=END,
+        goto="__end__",
         update={"messages": response, "run_count": state.get("run_count", 0) + 1},
     )
 

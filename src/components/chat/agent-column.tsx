@@ -2,17 +2,12 @@
 
 import { useRef, useEffect } from "react";
 import { Streamdown } from "streamdown";
+import { useRenderToolCall } from "@copilotkit/react-core/v2";
 
-export function AgentColumn({
-  title,
-  agent,
-  renderToolCall,
-}: {
-  title: string;
-  agent: any;
-  renderToolCall: any;
-}) {
+export function AgentColumn({ title, agent }: { title: string; agent: any }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const renderToolCall = useRenderToolCall();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -41,9 +36,22 @@ export function AgentColumn({
                 </div>
 
                 {message.role === "assistant" &&
-                  message.toolCalls?.map((toolCall: any) => (
-                    <div key={toolCall.id}>{renderToolCall({ toolCall })}</div>
-                  ))}
+                  message.toolCalls?.map((toolCall: any) => {
+                    // Find the corresponding result message
+                    const toolMessage = agent.messages.find(
+                      (m: any) =>
+                        m.role === "tool" && m.toolCallId === toolCall.id,
+                    );
+
+                    return (
+                      <div key={toolCall.id}>
+                        {renderToolCall({
+                          toolCall,
+                          toolMessage, // Pass result if available
+                        })}
+                      </div>
+                    );
+                  })}
               </div>
             ))
         )}
@@ -52,4 +60,3 @@ export function AgentColumn({
     </div>
   );
 }
-

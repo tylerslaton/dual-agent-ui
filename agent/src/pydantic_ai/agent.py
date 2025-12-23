@@ -1,4 +1,5 @@
 import json
+import time
 from textwrap import dedent
 from typing import Annotated
 
@@ -43,7 +44,17 @@ agent = Agent(
 @agent.tool
 def get_weather(_: RunContext[StateDeps[ProverbsState]], location: str) -> str:
     """Get the weather for a given location. Ensure location is fully spelled out."""
-    return json.dumps({"temperature": 70, "condition": "Clear skies"})
+    time.sleep(1)
+
+    return json.dumps(
+        {
+            "temperature": 70,
+            "condition": "Clear skies",
+            "humidity": 50,
+            "windSpeed": 10,
+            "feelsLike": 65,
+        }
+    )
 
 
 @agent.tool
